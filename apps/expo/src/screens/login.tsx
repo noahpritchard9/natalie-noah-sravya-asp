@@ -15,10 +15,7 @@ export const LogIn = ({ navigation }: { navigation: any }) => {
 	const [loginError, setLoginError] = useState<string>('')
 	const [username, setUsername] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
-	const loginQuery = trpc.user.byName.useQuery({
-		name: username,
-		password: password,
-	})
+	const loginQuery = trpc.user.byName.useQuery(username)
 
 	return (
 		<SafeAreaView>

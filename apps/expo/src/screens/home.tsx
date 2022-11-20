@@ -8,6 +8,7 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native'
+import { trpc } from '../utils/trpc'
 
 export const HomeScreen = ({
 	navigation,
@@ -16,11 +17,21 @@ export const HomeScreen = ({
 	navigation: any
 	route: any
 }) => {
-	const [vegan, setVegan] = useState<boolean>(false)
-	const [vegetarian, setVegetarian] = useState<boolean>(false)
-	const [pescatarian, setPescatarian] = useState<boolean>(false)
-	const [keto, setKeto] = useState<boolean>(false)
-	const [calories, setCalories] = useState<string>('2000')
+	const userQuery = trpc.user.byName.useQuery(route.params.name)
+
+	const [vegan, setVegan] = useState<boolean>(userQuery.data?.vegan ?? false)
+	const [vegetarian, setVegetarian] = useState<boolean>(
+		userQuery.data?.vegetarian ?? false
+	)
+	const [pescatarian, setPescatarian] = useState<boolean>(
+		userQuery.data?.pescatarian ?? false
+	)
+	const [keto, setKeto] = useState<boolean>(userQuery.data?.keto ?? false)
+	const [calories, setCalories] = useState<string>(
+		userQuery.data?.calories ?? '2000'
+	)
+
+	const updatePrefsQuery = trpc.user.updatePreferences.useMutation()
 	return (
 		<SafeAreaView className='flex flex-col m-2'>
 			<Text className='text-3xl font-bold mx-auto pb-2'>
@@ -63,6 +74,21 @@ export const HomeScreen = ({
 				></Switch>
 				<Text className='text-xl'>Keto</Text>
 			</View>
+			<TouchableOpacity
+				onPress={() =>
+					updatePrefsQuery.mutate({
+						name: route.params.name,
+						calories: calories,
+						vegan: vegan,
+						vegetarian: vegetarian,
+						pescatarian: pescatarian,
+						keto: keto,
+					})
+				}
+				className='border p-2 rounded bg-sky-500'
+			>
+				<Text className='w-fit'>Save Changes</Text>
+			</TouchableOpacity>
 		</SafeAreaView>
 	)
 }
