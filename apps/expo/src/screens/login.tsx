@@ -38,7 +38,7 @@ export const LogIn = ({ navigation }: { navigation: any }) => {
 				<TouchableOpacity
 					onPress={() =>
 						loginQuery.data
-							? navigation.navigate('Home', { name: username })
+							? navigation.navigate('Recipes', { name: username })
 							: setLoginError('Account not found, please try again.')
 					}
 					className='border rounded-xl bg-blue-400 p-4 w-2/5 items-center'

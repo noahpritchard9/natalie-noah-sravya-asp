@@ -89,6 +89,14 @@ export const HomeScreen = ({
 			>
 				<Text className='w-fit'>Save Changes</Text>
 			</TouchableOpacity>
+			<TouchableOpacity
+				onPress={() =>
+					navigation.navigate('Recipes', { name: route.params.name })
+				}
+				className='border p-2 rounded bg-sky-500'
+			>
+				<Text>See Recipes</Text>
+			</TouchableOpacity>
 		</SafeAreaView>
 	)
 }

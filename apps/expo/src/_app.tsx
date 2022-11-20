@@ -8,6 +8,7 @@ import { TRPCProvider } from './utils/trpc'
 import { HomeScreen } from './screens/home'
 import { LogIn } from './screens/login'
 import { SignUp } from './screens/signup'
+import { RecipeScreen } from './screens/recipes'
 
 const Stack = createNativeStackNavigator()
 
@@ -20,6 +21,7 @@ export const App = () => {
 						<Stack.Screen name='Log In' component={LogIn} />
 						<Stack.Screen name='Sign Up' component={SignUp} />
 						<Stack.Screen name='Home' component={HomeScreen} />
+						<Stack.Screen name='Recipes' component={RecipeScreen} />
 					</Stack.Navigator>
 					<StatusBar />
 				</SafeAreaProvider>
