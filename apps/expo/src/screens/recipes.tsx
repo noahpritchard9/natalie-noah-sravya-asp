@@ -32,7 +32,7 @@ export const RecipeScreen = ({
 
 	const fetchRecipes = async (): Promise<RecipeResults> => {
 		const res = await fetch(
-			`https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?random=true`,
+			`https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?diet=${userQuery.data?.vegetarian}&intolerances=${userQuery.data?.gluten}&maxCalories=${userQuery.data?.calories}`,
 			options
 		)
 		return await res.json()
@@ -53,7 +53,7 @@ export const RecipeScreen = ({
 			>
 				<Text>Preferences</Text>
 			</TouchableOpacity>
-			{/* <Text>{JSON.stringify(recipeQuery.data, null, 2)}</Text> */}
+			<Text>{JSON.stringify(recipeQuery.data, null, 2)}</Text>
 			{/* <View className='flex mt-12'>
 				{recipeQuery.data?.map(recipe => (
 					<Text>{recipe.title}</Text>

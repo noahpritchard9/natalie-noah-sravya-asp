@@ -24,6 +24,10 @@ export const userRouter = router({
 				vegetarian: z.boolean(),
 				pescatarian: z.boolean(),
 				keto: z.boolean(),
+				dairy: z.boolean(),
+				gluten: z.boolean(),
+				shellfish: z.boolean(),
+				peanuts: z.boolean(),
 			})
 		)
 		.mutation(({ ctx, input }) => {
@@ -35,6 +39,10 @@ export const userRouter = router({
 					vegetarian: input.vegetarian,
 					pescatarian: input.pescatarian,
 					keto: input.keto,
+					dairy: input.dairy,
+					gluten: input.gluten,
+					shellfish: input.shellfish,
+					peanuts: input.peanuts,
 				},
 			})
 		}),

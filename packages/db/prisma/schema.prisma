@@ -19,4 +19,8 @@ model User {
     vegetarian  Boolean @default(false)
     pescatarian Boolean @default(false)
     keto        Boolean @default(false)
+    gluten      Boolean @default(false)
+    peanuts     Boolean @default(false)
+    shellfish   Boolean @default(false)
+    dairy       Boolean @default(false)
 }

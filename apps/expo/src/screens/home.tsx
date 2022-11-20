@@ -27,6 +27,14 @@ export const HomeScreen = ({
 		userQuery.data?.pescatarian ?? false
 	)
 	const [keto, setKeto] = useState<boolean>(userQuery.data?.keto ?? false)
+	const [dairy, setDairy] = useState<boolean>(userQuery.data?.dairy ?? false)
+	const [gluten, setGluten] = useState<boolean>(userQuery.data?.gluten ?? false)
+	const [shellfish, setShellfish] = useState<boolean>(
+		userQuery.data?.shellfish ?? false
+	)
+	const [peanuts, setPeanuts] = useState<boolean>(
+		userQuery.data?.peanuts ?? false
+	)
 	const [calories, setCalories] = useState<string>(
 		userQuery.data?.calories ?? '2000'
 	)
@@ -74,6 +82,34 @@ export const HomeScreen = ({
 				></Switch>
 				<Text className='text-xl'>Keto</Text>
 			</View>
+			<View className='flex'>
+				<Switch
+					value={dairy}
+					onValueChange={() => setDairy(prev => !prev)}
+				></Switch>
+				<Text className='text-xl'>Dairy</Text>
+			</View>
+			<View className='flex'>
+				<Switch
+					value={gluten}
+					onValueChange={() => setGluten(prev => !prev)}
+				></Switch>
+				<Text className='text-xl'>Gluten</Text>
+			</View>
+			<View className='flex'>
+				<Switch
+					value={shellfish}
+					onValueChange={() => setShellfish(prev => !prev)}
+				></Switch>
+				<Text className='text-xl'>Shellfish</Text>
+			</View>
+			<View className='flex'>
+				<Switch
+					value={peanuts}
+					onValueChange={() => setPeanuts(prev => !prev)}
+				></Switch>
+				<Text className='text-xl'>Peanuts</Text>
+			</View>
 			<TouchableOpacity
 				onPress={() =>
 					updatePrefsQuery.mutate({
@@ -83,6 +119,10 @@ export const HomeScreen = ({
 						vegetarian: vegetarian,
 						pescatarian: pescatarian,
 						keto: keto,
+						dairy: dairy,
+						gluten: gluten,
+						shellfish: shellfish,
+						peanuts: peanuts,
 					})
 				}
 				className='border p-2 rounded bg-sky-500'
