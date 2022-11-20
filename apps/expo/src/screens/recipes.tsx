@@ -10,6 +10,7 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native'
+import { RECIPE_API_KEY } from '../apiKeys'
 import { Recipe, RecipeResults } from '../types/recipeTypes'
 import { trpc } from '../utils/trpc'
 
@@ -25,7 +26,7 @@ export const RecipeScreen = ({
 	const options = {
 		method: 'GET',
 		headers: {
-			'X-RapidAPI-Key': '8a681a5a5amsh9568868778adfe3p1aa274jsn45b2ced522c9',
+			'X-RapidAPI-Key': RECIPE_API_KEY,
 			'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com',
 		},
 	}
