@@ -8,16 +8,23 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native'
+import { trpc } from '../utils/trpc'
 import { SignUp } from './signup'
 
 export const LogIn = ({ navigation }: { navigation: any }) => {
+	const [loginError, setLoginError] = useState<string>('')
 	const [username, setUsername] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
+	const loginQuery = trpc.user.byName.useQuery({
+		name: username,
+		password: password,
+	})
 
 	return (
 		<SafeAreaView>
 			<View className='flex items-center justify-center p-4 gap-2'>
 				<Text className='text-5xl font-bold'>Welcome</Text>
+				{loginError && <Text className='text-red-500'>{loginError}</Text>}
 				<TextInput
 					value={username}
 					placeholder='Username'
@@ -32,7 +39,11 @@ export const LogIn = ({ navigation }: { navigation: any }) => {
 					className='border p-2 rounded-xl w-3/4'
 				></TextInput>
 				<TouchableOpacity
-					onPress={() => navigation.navigate('Home', { name: username })}
+					onPress={() =>
+						loginQuery.data
+							? navigation.navigate('Home', { name: username })
+							: setLoginError('Account not found, please try again.')
+					}
 					className='border rounded-xl bg-blue-400 p-4 w-2/5 items-center'
 				>
 					<Text>Log In</Text>

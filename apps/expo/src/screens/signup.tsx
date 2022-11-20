@@ -8,6 +8,7 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native'
+import { trpc } from '../utils/trpc'
 
 export const SignUp = ({
 	navigation,
@@ -18,6 +19,7 @@ export const SignUp = ({
 }) => {
 	const [username, setUsername] = useState<string>(route.params.name ?? '')
 	const [password, setPassword] = useState<string>('')
+	const signUpQuery = trpc.user.create.useMutation()
 
 	return (
 		<SafeAreaView>
@@ -37,7 +39,10 @@ export const SignUp = ({
 					className='border p-2 rounded-xl w-3/4'
 				></TextInput>
 				<TouchableOpacity
-					onPress={() => navigation.navigate('Home', { name: username })}
+					onPress={() => {
+						signUpQuery.mutate({ name: username, password: password })
+						navigation.navigate('Home', { name: username })
+					}}
 					className='border rounded-xl bg-blue-400 p-4 w-2/5 items-center'
 				>
 					<Text>Log In</Text>
