@@ -42,9 +42,9 @@ export const HomeScreen = ({
 	const updatePrefsQuery = trpc.user.updatePreferences.useMutation()
 	return (
 		<SafeAreaView className='flex flex-col m-2'>
-			<Text className='text-3xl font-bold mx-auto pb-2'>
+			{/* <Text className='text-3xl font-bold mx-auto pb-2'>
 				Welcome {route.params.name}
-			</Text>
+			</Text> */}
 			<View className='flex'>
 				<Text className='text-xl'>Calories</Text>
 				<TextInput
