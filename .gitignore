@@ -47,4 +47,4 @@ yarn-error.log*
 .turbo
 
 # api keys
-apiKeys
+apiKeys.ts
