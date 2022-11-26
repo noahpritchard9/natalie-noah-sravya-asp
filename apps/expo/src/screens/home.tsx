@@ -54,61 +54,63 @@ export const HomeScreen = ({
 					className='border rounded-2xl p-2 m-2'
 				></TextInput>
 			</View>
-			<View className='flex'>
+			<Text className='text-xl'>Dietary Preferences</Text>
+			<View className='flex flex-row mb-1'>
 				<Switch
 					value={vegan}
 					onValueChange={() => setVegan(prev => !prev)}
 				></Switch>
-				<Text className='text-xl'>Vegan</Text>
+				<Text className='text-xl ml-1'>Vegan</Text>
 			</View>
-			<View className='flex'>
+			<View className='flex flex-row mb-1'>
 				<Switch
 					value={vegetarian}
 					onValueChange={() => setVegetarian(prev => !prev)}
 				></Switch>
-				<Text className='text-xl'>Vegetarian</Text>
+				<Text className='text-xl ml-1'>Vegetarian</Text>
 			</View>
-			<View className='flex'>
+			<View className='flex flex-row mb-1'>
 				<Switch
 					value={pescatarian}
 					onValueChange={() => setPescatarian(prev => !prev)}
 				></Switch>
-				<Text className='text-xl'>Pescatarian</Text>
+				<Text className='text-xl ml-1'>Pescatarian</Text>
 			</View>
-			<View className='flex'>
+			<View className='flex flex-row mb-1'>
 				<Switch
 					value={keto}
 					onValueChange={() => setKeto(prev => !prev)}
 				></Switch>
-				<Text className='text-xl'>Keto</Text>
+				<Text className='text-xl ml-1'>Keto</Text>
 			</View>
-			<View className='flex'>
+			<Text className='text-xl mt-2'>Dietary Intolerances</Text>
+			<View className='flex flex-row mb-1'>
 				<Switch
 					value={dairy}
 					onValueChange={() => setDairy(prev => !prev)}
 				></Switch>
-				<Text className='text-xl'>Dairy</Text>
+				<Text className='text-xl ml-1'>Dairy</Text>
 			</View>
-			<View className='flex'>
+			<View className='flex flex-row mb-1'>
 				<Switch
 					value={gluten}
 					onValueChange={() => setGluten(prev => !prev)}
 				></Switch>
-				<Text className='text-xl'>Gluten</Text>
+				<Text className='text-xl ml-1'>Gluten</Text>
 			</View>
-			<View className='flex'>
+			<View className='flex flex-row mb-1'>
 				<Switch
 					value={shellfish}
 					onValueChange={() => setShellfish(prev => !prev)}
 				></Switch>
-				<Text className='text-xl'>Shellfish</Text>
+				<Text className='text-xl ml-1'>Shellfish</Text>
 			</View>
-			<View className='flex'>
+			<View className='flex flex-row mb-1'>
 				<Switch
 					value={peanuts}
 					onValueChange={() => setPeanuts(prev => !prev)}
 				></Switch>
-				<Text className='text-xl'>Peanuts</Text>
+				<Text className='text-xl ml-1'>Peanuts</Text>
 			</View>
 			<TouchableOpacity
 				onPress={() =>
@@ -125,7 +127,7 @@ export const HomeScreen = ({
 						peanuts: peanuts,
 					})
 				}
-				className='border p-2 rounded bg-sky-500'
+				className='border m-2 p-2 rounded-xl bg-sky-500'
 			>
 				<Text className='w-fit'>Save Changes</Text>
 			</TouchableOpacity>
@@ -133,7 +135,7 @@ export const HomeScreen = ({
 				onPress={() =>
 					navigation.navigate('Recipes', { name: route.params.name })
 				}
-				className='border p-2 rounded bg-sky-500'
+				className='border mx-2 p-2 rounded-xl bg-sky-500'
 			>
 				<Text>See Recipes</Text>
 			</TouchableOpacity>

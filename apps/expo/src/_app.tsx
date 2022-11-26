@@ -10,7 +10,7 @@ import { HomeScreen } from './screens/home'
 import { LogIn } from './screens/login'
 import { SignUp } from './screens/signup'
 import { RecipeScreen } from './screens/recipes'
-import { TouchableOpacity } from 'react-native'
+import { InstructionsScreen } from './screens/instructions'
 
 const Stack = createNativeStackNavigator()
 
@@ -26,14 +26,9 @@ export const App = () => {
 						<Stack.Screen
 							name='Recipes'
 							component={RecipeScreen}
-							// options={({ navigation }) => ({
-							// 	headerRight: () => (
-							// 		<TouchableOpacity onPress={() => navigation.navigate('Home')}>
-							// 			<Text>Preferences</Text>
-							// 		</TouchableOpacity>
-							// 	),
-							// })}
+							options={{ headerBackVisible: false }}
 						/>
+						<Stack.Screen name='Instructions' component={InstructionsScreen} />
 					</Stack.Navigator>
 					<StatusBar />
 				</SafeAreaProvider>

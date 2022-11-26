@@ -13,6 +13,7 @@ import {
 	View,
 } from 'react-native'
 import { RECIPE_API_KEY } from '../apiKeys'
+import { Instructions } from '../types/instructionTypes'
 import { Recipe, RecipeResults } from '../types/recipeTypes'
 import { trpc } from '../utils/trpc'
 
@@ -23,6 +24,8 @@ export const RecipeScreen = ({
 	navigation: any
 	route: any
 }) => {
+	const [currentId, setCurrentId] = useState<string>('1')
+
 	const userQuery = trpc.user.byName.useQuery(route.params.name)
 
 	const options = {
@@ -44,6 +47,22 @@ export const RecipeScreen = ({
 
 	const recipeQuery = useQuery(['recipes'], fetchRecipes)
 
+	// const fetchInstructions = async () => {
+	// 	if (currentId === '') return // check this
+	// 	const res = await fetch(
+	// 		`https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${currentId}/information`,
+	// 		options
+	// 	)
+	// 	console.log('fetching instructions')
+	// 	return await res.json()
+	// }
+
+	// const instructionsQuery = useQuery({
+	// 	queryKey: ['instructions', currentId],
+	// 	queryFn: fetchInstructions,
+	// 	enabled: !!recipeQuery.data,
+	// })
+
 	if (recipeQuery.isLoading) return <Text>Loading...</Text>
 
 	if (recipeQuery.isError)
@@ -62,12 +81,23 @@ export const RecipeScreen = ({
 					<Text>Preferences</Text>
 				</TouchableOpacity>
 			</View>
-			<View className='h-1 w-full bg-black mr-4' />
+			<View className='h-1 w-full bg-black mr-4 mb-2' />
 			<FlashList
 				data={recipeQuery.data.results}
 				estimatedItemSize={20}
 				ItemSeparatorComponent={() => <View className='h-2'></View>}
-				renderItem={recipe => <CurrentRecipe {...(recipe.item as Recipe)} />}
+				renderItem={recipe => (
+					<TouchableOpacity
+						onPress={() => {
+							console.log('prev value: ', (recipe.item as Recipe).id.toString())
+							navigation.navigate('Instructions', {
+								id: (recipe.item as Recipe).id.toString(),
+							})
+						}}
+					>
+						<CurrentRecipe {...(recipe.item as Recipe)} />
+					</TouchableOpacity>
+				)}
 			/>
 		</SafeAreaView>
 	)
@@ -75,15 +105,13 @@ export const RecipeScreen = ({
 
 const CurrentRecipe = (props: Recipe) => {
 	return (
-		<View className='flex flex-row items-center mt-6 mr-4 ml-1 flex-wrap border rounded-xl'>
-			<TouchableOpacity onPress={() => Linking.openURL(props)}>
-				<Image
-					source={{ uri: props.image }}
-					style={{ width: 75, height: 75 }}
-					className='rounded-xl'
-				></Image>
-				<Text className='text-xl'>{props.title}</Text>
-			</TouchableOpacity>
-		</View>
+		<SafeAreaView className='flex flex-row items-center border rounded-xl mr-4'>
+			<Image
+				source={{ uri: props.image }}
+				style={{ width: 75, height: 75 }}
+				className='rounded-xl'
+			></Image>
+			<Text className='text-xl w-3/4 ml-1'>{props.title}</Text>
+		</SafeAreaView>
 	)
 }
