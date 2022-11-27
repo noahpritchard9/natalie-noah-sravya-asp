@@ -4,17 +4,13 @@ import React, { useState } from 'react'
 
 import {
 	Image,
-	Linking,
 	SafeAreaView,
-	Switch,
 	Text,
-	TextInput,
 	TouchableOpacity,
 	View,
 } from 'react-native'
 import { RECIPE_API_KEY } from '../apiKeys'
-import { Instructions } from '../types/instructionTypes'
-import { Recipe, RecipeResults } from '../types/recipeTypes'
+import { Recipe } from '../types/recipeTypes'
 import { trpc } from '../utils/trpc'
 
 export const RecipeScreen = ({
@@ -46,22 +42,6 @@ export const RecipeScreen = ({
 	}
 
 	const recipeQuery = useQuery(['recipes'], fetchRecipes)
-
-	// const fetchInstructions = async () => {
-	// 	if (currentId === '') return // check this
-	// 	const res = await fetch(
-	// 		`https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${currentId}/information`,
-	// 		options
-	// 	)
-	// 	console.log('fetching instructions')
-	// 	return await res.json()
-	// }
-
-	// const instructionsQuery = useQuery({
-	// 	queryKey: ['instructions', currentId],
-	// 	queryFn: fetchInstructions,
-	// 	enabled: !!recipeQuery.data,
-	// })
 
 	if (recipeQuery.isLoading) return <Text>Loading...</Text>
 

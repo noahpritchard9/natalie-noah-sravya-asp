@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query';
 import {
 	Linking,
 	SafeAreaView,
@@ -6,9 +6,9 @@ import {
 	TouchableOpacity,
 	View,
 	Image,
-} from 'react-native'
-import { RECIPE_API_KEY } from '../apiKeys'
-import { Instructions } from '../types/instructionTypes'
+} from 'react-native';
+import { RECIPE_API_KEY } from '../apiKeys';
+import { Instructions } from '../types/instructionTypes';
 
 const options = {
 	method: 'GET',
@@ -16,32 +16,32 @@ const options = {
 		'X-RapidAPI-Key': RECIPE_API_KEY,
 		'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com',
 	},
-}
+};
 
 export const InstructionsScreen = ({
 	navigation,
 	route,
 }: {
-	navigation: any
-	route: any
+	navigation: any;
+	route: any;
 }) => {
-	const id: string = route.params.id
+	const id: string = route.params.id;
 
 	const fetchInstructions = async () => {
-		console.log('id', id)
+		console.log('id', id);
 		const res = await fetch(
 			`https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id}/information`,
 			options
-		)
-		return (await res.json()) as Instructions
-	}
+		);
+		return (await res.json()) as Instructions;
+	};
 
-	const instructionsQuery = useQuery(['instructions'], fetchInstructions)
+	const instructionsQuery = useQuery(['instructions'], fetchInstructions);
 
-	if (instructionsQuery.isLoading) return <Text>Loading...</Text>
+	if (instructionsQuery.isLoading) return <Text>Loading...</Text>;
 
 	if (instructionsQuery.isError)
-		return <Text>{(instructionsQuery.error as Error).message}</Text>
+		return <Text>{(instructionsQuery.error as Error).message}</Text>;
 
 	return (
 		<SafeAreaView>
@@ -66,7 +66,7 @@ export const InstructionsScreen = ({
 
 				<View className='flex'>
 					{instructionsQuery.data.extendedIngredients.map((i, index) => (
-						<Text>
+						<Text key={i.id}>
 							{index + 1}. {i.name}
 						</Text>
 					))}
@@ -80,5 +80,5 @@ export const InstructionsScreen = ({
 				</View>
 			</View>
 		</SafeAreaView>
-	)
-}
+	);
+};
