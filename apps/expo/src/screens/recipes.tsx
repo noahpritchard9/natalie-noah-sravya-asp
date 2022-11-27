@@ -1,6 +1,6 @@
-import { FlashList } from '@shopify/flash-list'
-import { useQuery } from '@tanstack/react-query'
-import React, { useState } from 'react'
+import { FlashList } from '@shopify/flash-list';
+import { useQuery } from '@tanstack/react-query';
+import React, { useState } from 'react';
 
 import {
 	Image,
@@ -8,21 +8,19 @@ import {
 	Text,
 	TouchableOpacity,
 	View,
-} from 'react-native'
-import { RECIPE_API_KEY } from '../apiKeys'
-import { Recipe } from '../types/recipeTypes'
-import { trpc } from '../utils/trpc'
+} from 'react-native';
+import { RECIPE_API_KEY } from '../apiKeys';
+import { Recipe } from '../types/recipeTypes';
+import { trpc } from '../utils/trpc';
 
 export const RecipeScreen = ({
 	navigation,
 	route,
 }: {
-	navigation: any
-	route: any
+	navigation: any;
+	route: any;
 }) => {
-	const [currentId, setCurrentId] = useState<string>('1')
-
-	const userQuery = trpc.user.byName.useQuery(route.params.name)
+	const userQuery = trpc.user.byName.useQuery(route.params.name);
 
 	const options = {
 		method: 'GET',
@@ -30,23 +28,27 @@ export const RecipeScreen = ({
 			'X-RapidAPI-Key': RECIPE_API_KEY,
 			'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com',
 		},
-	}
+	};
 
 	const fetchRecipes = async () => {
-		const res = await fetch(
-			`https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?diet=${userQuery.data?.vegetarian}&intolerances=${userQuery.data?.gluten}&maxCalories=${userQuery.data?.calories}`,
-			options
-		)
-		console.log('fetching recipes')
-		return await res.json()
-	}
+		try {
+			const res = await fetch(
+				`https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?diet=${userQuery.data?.vegetarian}&intolerances=${userQuery.data?.gluten}&maxCalories=${userQuery.data?.calories}`,
+				options
+			);
+			return await res.json();
+		} catch (e) {
+			console.log('Error fetching recipes', e);
+			return {};
+		}
+	};
 
-	const recipeQuery = useQuery(['recipes'], fetchRecipes)
+	const recipeQuery = useQuery(['recipes'], fetchRecipes);
 
-	if (recipeQuery.isLoading) return <Text>Loading...</Text>
+	if (recipeQuery.isLoading) return <Text>Loading...</Text>;
 
 	if (recipeQuery.isError)
-		return <Text>{(recipeQuery.error as Error).message}</Text>
+		return <Text>{(recipeQuery.error as Error).message}</Text>;
 
 	return (
 		<SafeAreaView className='flex flex-col m-2 h-full w-full'>
@@ -65,14 +67,14 @@ export const RecipeScreen = ({
 			<FlashList
 				data={recipeQuery.data.results}
 				estimatedItemSize={20}
+				ListEmptyComponent={<Text>No Recipes Found</Text>}
 				ItemSeparatorComponent={() => <View className='h-2'></View>}
 				renderItem={recipe => (
 					<TouchableOpacity
 						onPress={() => {
-							console.log('prev value: ', (recipe.item as Recipe).id.toString())
 							navigation.navigate('Instructions', {
 								id: (recipe.item as Recipe).id.toString(),
-							})
+							});
 						}}
 					>
 						<CurrentRecipe {...(recipe.item as Recipe)} />
@@ -80,8 +82,8 @@ export const RecipeScreen = ({
 				)}
 			/>
 		</SafeAreaView>
-	)
-}
+	);
+};
 
 const CurrentRecipe = (props: Recipe) => {
 	return (
@@ -93,5 +95,5 @@ const CurrentRecipe = (props: Recipe) => {
 			></Image>
 			<Text className='text-xl w-3/4 ml-1'>{props.title}</Text>
 		</SafeAreaView>
-	)
-}
+	);
+};

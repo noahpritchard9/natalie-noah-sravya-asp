@@ -18,17 +18,10 @@ const options = {
 	},
 };
 
-export const InstructionsScreen = ({
-	navigation,
-	route,
-}: {
-	navigation: any;
-	route: any;
-}) => {
+export const InstructionsScreen = ({ route }: { route: any }) => {
 	const id: string = route.params.id;
 
 	const fetchInstructions = async () => {
-		console.log('id', id);
 		const res = await fetch(
 			`https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id}/information`,
 			options
