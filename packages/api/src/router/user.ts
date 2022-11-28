@@ -19,15 +19,16 @@ export const userRouter = router({
 		.input(
 			z.object({
 				name: z.string(),
-				calories: z.string(),
-				vegan: z.boolean(),
-				vegetarian: z.boolean(),
-				pescatarian: z.boolean(),
-				keto: z.boolean(),
-				dairy: z.boolean(),
-				gluten: z.boolean(),
-				shellfish: z.boolean(),
-				peanuts: z.boolean(),
+				calories: z.string().optional(),
+				calsRemaining: z.string().optional(),
+				vegan: z.boolean().optional(),
+				vegetarian: z.boolean().optional(),
+				pescatarian: z.boolean().optional(),
+				keto: z.boolean().optional(),
+				dairy: z.boolean().optional(),
+				gluten: z.boolean().optional(),
+				shellfish: z.boolean().optional(),
+				peanuts: z.boolean().optional(),
 			})
 		)
 		.mutation(({ ctx, input }) => {
@@ -35,6 +36,7 @@ export const userRouter = router({
 				where: { name: input.name },
 				data: {
 					calories: input.calories,
+					calsRemaining: input.calsRemaining,
 					vegan: input.vegan,
 					vegetarian: input.vegetarian,
 					pescatarian: input.pescatarian,

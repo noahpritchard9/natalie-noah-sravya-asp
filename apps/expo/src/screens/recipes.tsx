@@ -74,6 +74,10 @@ export const RecipeScreen = ({
 						onPress={() => {
 							navigation.navigate('Instructions', {
 								id: (recipe.item as Recipe).id.toString(),
+								cals: (
+									recipe.item as Recipe
+								).nutrition.nutrients[0].amount.toFixed(0),
+								name: route.params.name,
 							});
 						}}
 					>

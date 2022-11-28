@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import {
 	Linking,
 	SafeAreaView,
@@ -6,9 +7,11 @@ import {
 	TouchableOpacity,
 	View,
 	Image,
+	Alert,
 } from 'react-native';
 import { RECIPE_API_KEY } from '../apiKeys';
 import { Instructions } from '../types/instructionTypes';
+import { trpc } from '../utils/trpc';
 
 const options = {
 	method: 'GET',
@@ -20,6 +23,18 @@ const options = {
 
 export const InstructionsScreen = ({ route }: { route: any }) => {
 	const id: string = route.params.id;
+	const givenCals: string = route.params.cals;
+	const name: string = route.params.name;
+	const [cals, setCals] = useState<string>(givenCals);
+	const [recipeSelected, setRecipeSelected] = useState(false);
+
+	const unselectedClass = 'border p-4 rounded-full mt-2 bg-sky-300';
+
+	const selectedClass = 'border p-4 rounded-full mt-2 bg-sky-300 opacity-50';
+
+	const userQuery = trpc.user.byName.useQuery(name);
+
+	const calsQuery = trpc.user.updatePreferences.useMutation();
 
 	const fetchInstructions = async () => {
 		const res = await fetch(
@@ -48,6 +63,11 @@ export const InstructionsScreen = ({ route }: { route: any }) => {
 				<Text className='text-2xl font-bold'>
 					{instructionsQuery.data.title}
 				</Text>
+				{cals && (
+					<Text>
+						<Text className='font-bold'>{cals}</Text> Calories
+					</Text>
+				)}
 				<Text>
 					Ready in{' '}
 					<Text className='font-bold'>
@@ -69,6 +89,25 @@ export const InstructionsScreen = ({ route }: { route: any }) => {
 						onPress={() => Linking.openURL(instructionsQuery.data.sourceUrl)}
 					>
 						<Text className='text-xl underline'>See complete recipe</Text>
+					</TouchableOpacity>
+				</View>
+				<View>
+					<TouchableOpacity
+						className={recipeSelected ? selectedClass : unselectedClass}
+						disabled={recipeSelected}
+						onPress={() => {
+							setCals(route.params.cals);
+							calsQuery.mutate({
+								name: name,
+								calsRemaining: (
+									parseInt(userQuery.data?.calsRemaining!) - parseInt(cals)
+								).toString(),
+							});
+							Alert.alert('Meal Selected.');
+							setRecipeSelected(true);
+						}}
+					>
+						<Text>✔</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
