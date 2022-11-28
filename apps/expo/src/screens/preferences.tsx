@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { trpc } from '../utils/trpc';
 
-export const HomeScreen = ({
+export const PreferencesScreen = ({
 	navigation,
 	route,
 }: {

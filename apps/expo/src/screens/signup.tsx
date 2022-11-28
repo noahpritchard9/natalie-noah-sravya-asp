@@ -73,7 +73,7 @@ export const SignUp = ({
 						if (password === confirmPassword) {
 							signUpQuery.mutate({ name: username, password: password });
 							if (signUpError !== '') {
-								navigation.navigate('Home', { name: username });
+								navigation.navigate('Preferences', { name: username });
 							}
 						} else {
 							setSignUpError('Passwords do not match, please try again.');

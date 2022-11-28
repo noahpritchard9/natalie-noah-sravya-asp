@@ -33,7 +33,7 @@ export const RecipeScreen = ({
 	const fetchRecipes = async () => {
 		try {
 			const res = await fetch(
-				`https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?diet=${userQuery.data?.vegetarian}&intolerances=${userQuery.data?.gluten}&maxCalories=${userQuery.data?.calories}`,
+				`https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?diet=${userQuery.data?.vegetarian}&intolerances=${userQuery.data?.gluten}&maxCalories=${userQuery.data?.calsRemaining}`,
 				options
 			);
 			return await res.json();
@@ -57,7 +57,7 @@ export const RecipeScreen = ({
 				<TouchableOpacity
 					className='mr-4'
 					onPress={() =>
-						navigation.navigate('Home', { name: route.params.name })
+						navigation.navigate('Preferences', { name: route.params.name })
 					}
 				>
 					<Text>Preferences</Text>
